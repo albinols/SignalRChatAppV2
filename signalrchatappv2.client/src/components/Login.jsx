@@ -38,7 +38,7 @@ const Login = () => {
           />
           <button onClick={handleLogin}>Logga in</button>
           {errorMessage && <p className="error-message">{errorMessage}</p>}
-          <div className="register-link" onClick={goToRegister}>
+          <div className="register-link" onClick={() => navigate("/signup")}>
             Har du inget konto? Registrera dig här
           </div>
         </div>

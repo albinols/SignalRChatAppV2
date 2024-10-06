@@ -50,7 +50,7 @@ const SignUp = () => {
           />
           <button onClick={handleSubmit}>Registrera</button>
           {errorMessage && <p className="error-message">{errorMessage}</p>}
-          <div className="login-link" onClick={goToLogin}>
+          <div className="login-link" onClick={() => navigate("/login")}>
             Har du redan ett konto? Logga in här
           </div>
         </div>
