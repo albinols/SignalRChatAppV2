@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserStateContext } from '../services/UserState';
-import './Login.css';
+import './Chat.css';
 
-const Login = () => {
+const Chat = () => {
 
   return (
     <div>
@@ -13,4 +13,4 @@ const Login = () => {
 
 };
 
-export default Login;
+export default Chat;

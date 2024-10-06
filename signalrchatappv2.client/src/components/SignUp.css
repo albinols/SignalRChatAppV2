@@ -1,0 +1,19 @@
+.container {
+  position: relative;
+  border: 5px solid gray;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10vh;
+  width: 40vw;
+  padding: 2em;
+  background-color: rgb(240, 240, 240);
+}
+
+.login-link {
+  
+}
+
+.login-link:hover {
+  color: blue;
+  cursor: pointer;
+}
