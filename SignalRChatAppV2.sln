@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRChatAppV2.Server", "SignalRChatAppV2.Server\SignalRChatAppV2.Server.csproj", "{920B43AA-CBF5-4AD6-B8AA-564666968793}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "signalrchatappv2.client", "signalrchatappv2.client\signalrchatappv2.client.esproj", "{611694C8-28BF-4907-8547-34C8ED29F9D4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{920B43AA-CBF5-4AD6-B8AA-564666968793}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{920B43AA-CBF5-4AD6-B8AA-564666968793}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{920B43AA-CBF5-4AD6-B8AA-564666968793}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{920B43AA-CBF5-4AD6-B8AA-564666968793}.Release|Any CPU.Build.0 = Release|Any CPU
+		{611694C8-28BF-4907-8547-34C8ED29F9D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{611694C8-28BF-4907-8547-34C8ED29F9D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{611694C8-28BF-4907-8547-34C8ED29F9D4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{611694C8-28BF-4907-8547-34C8ED29F9D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{611694C8-28BF-4907-8547-34C8ED29F9D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{611694C8-28BF-4907-8547-34C8ED29F9D4}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {550F5795-43BD-4D21-B55A-90A8ED9BACD8}
+	EndGlobalSection
+EndGlobal
