@@ -20,7 +20,7 @@ namespace SignalRChatAppV2.Server.Controllers
         private readonly ILogger<AuthController> _logger;
 
         [HttpPost]
-        [Route("register")]
+        [Route("signup")]
 
         public async Task<IActionResult> Register(UserDto userDto)
         {
