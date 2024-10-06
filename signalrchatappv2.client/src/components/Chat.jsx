@@ -1,14 +1,24 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
+import { AppStateContext } from '../services/StateProvider';
 import * as signalR from '@microsoft/signalr';
 import DOMPurify from 'dompurify';
 import './Chat.css';
 
 const Chat = () => {
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
+  const {
+    message,
+    setMessage,
+    messages,
+    setMessages,
+    connection,
+    setConnection,
+    username,
+    setUsername,
+    authorized,
+    setAuthorized,
+  } = useContext(AppStateContext); // Access the centralized state
+
   const connectionRef = useRef(null);
-  const [username, setUsername] = useState(null);
-  const [authorized, setAuthorized] = useState(false);
 
   useEffect(() => {
     const token = sessionStorage.getItem("jwtToken");
@@ -24,6 +34,7 @@ const Chat = () => {
         .build();
 
       connectionRef.current = newConnection;
+      setConnection(newConnection);
 
       newConnection
         .start()
@@ -40,7 +51,7 @@ const Chat = () => {
               },
             ]);
           });
-        })  
+        })
         .catch((err) => console.error("Connection error:", err));
     }
 
@@ -52,12 +63,12 @@ const Chat = () => {
         connectionRef.current = null;
       }
     };
-  }, []);
+  }, [setMessages, setUsername, setAuthorized, setConnection]);
 
   const sendMessage = async () => {
-    if (connectionRef.current && message.trim()) {
+    if (connection && message.trim()) {
       try {
-        await connectionRef.current.send("SendMessage", message);
+        await connection.send("SendMessage", message);
         setMessage("");
       } catch (err) {
         console.error("Failed to send message:", err);
@@ -72,23 +83,16 @@ const Chat = () => {
   };
 
   const logOut = () => {
-    if (connectionRef.current) {
-      connectionRef.current
-        .stop()
-        .then(() => {
-          sessionStorage.removeItem("jwtToken");
-          window.location.href = "/login";
-        })
-        .catch((err) => console.error("Error while stopping connection:", err));
+    if (connection) {
+      connection.stop().then(() => {
+        sessionStorage.removeItem("jwtToken");
+        window.location.href = "/login";
+      });
     }
   };
 
   if (!authorized) {
-    return (
-      <div>
-        <p>You are not authorized! ⛔</p>
-      </div>
-    );
+    return <p>You are not authorized! ⛔</p>;
   }
 
   return (
@@ -97,7 +101,7 @@ const Chat = () => {
         <h2>Welcome, {username}</h2>
         <button onClick={logOut}>Log out</button>
       </div>
-  
+
       <div className="chat-window">
         {messages.map((msg, index) => (
           <div key={index} className="message">
@@ -105,7 +109,7 @@ const Chat = () => {
           </div>
         ))}
       </div>
-  
+
       <div className="message-input">
         <input
           type="text"
@@ -120,7 +124,6 @@ const Chat = () => {
       </div>
     </div>
   );
-
 };
 
 export default Chat;
