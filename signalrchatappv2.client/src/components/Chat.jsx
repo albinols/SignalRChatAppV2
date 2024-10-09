@@ -19,9 +19,14 @@ const Chat = () => {
   } = useContext(AppStateContext); // Access the centralized state
 
   const connectionRef = useRef(null);
+  const chatWindowRef = useRef(null);
 
   useEffect(() => {
     const token = sessionStorage.getItem("jwtToken");
+
+    if (chatWindowRef.current) {
+      chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
+    }
 
     if (token && !connectionRef.current) {
       const decodedJwt = JSON.parse(atob(token.split(".")[1]));
@@ -102,7 +107,7 @@ const Chat = () => {
         <button onClick={logOut}>Log out</button>
       </div>
 
-      <div className="chat-window">
+      <div className="chat-window" ref={chatWindowRef}>
         {messages.map((msg, index) => (
           <div key={index} className="message">
             <strong>{msg.user}:</strong> {msg.message}
@@ -110,13 +115,14 @@ const Chat = () => {
         ))}
       </div>
 
-      <div className="message-input">
+      <div className="message-container">
         <input
+          className='message-input'
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Type your message..."
+          placeholder="Write message..."
         />
         <button onClick={sendMessage} disabled={!message.trim()}>
           Send

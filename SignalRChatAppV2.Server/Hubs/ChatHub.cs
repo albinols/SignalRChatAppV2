@@ -7,9 +7,14 @@ using SignalRChatAppV2.Server.Data.Entities;
 namespace SignalRChatAppV2.Server.Hubs
 {
     [Authorize]
-    public class ChatHub(ChatContext context) : Hub
+    public class ChatHub : Hub
     {
-        private readonly ChatContext _context = context;
+        private readonly ChatContext _context;
+
+        public ChatHub(ChatContext context)
+        {
+            _context = context;
+        }
 
         public override async Task OnConnectedAsync()
         {
@@ -18,7 +23,7 @@ namespace SignalRChatAppV2.Server.Hubs
                 var messages = await _context.ChatMessages
                 .Include(m => m.User)
                 .OrderByDescending(m => m.Timestamp)
-                .Take(20)
+                .Take(30)
                 .ToListAsync();
 
 

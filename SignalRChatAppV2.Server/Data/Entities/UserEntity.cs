@@ -4,6 +4,6 @@ namespace SignalRChatAppV2.Server.Data.Entities
 {
     public class UserEntity : IdentityUser
     {
-        ICollection<MessageEntity> Messages { get; set; } = null!;
+        public ICollection<MessageEntity> Messages { get; set; } = new List<MessageEntity>();
     }
 }

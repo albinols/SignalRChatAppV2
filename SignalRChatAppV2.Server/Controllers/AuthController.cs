@@ -13,11 +13,18 @@ namespace SignalRChatAppV2.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController(SignInManager<UserEntity> signInManager, UserManager<UserEntity> userManager, ILogger<AuthController> logger) : ControllerBase
+    public class AuthController : ControllerBase
     {
-        private readonly SignInManager<UserEntity> _signInManager = signInManager;
-        private readonly UserManager<UserEntity> _userManager = userManager;
+        private readonly SignInManager<UserEntity> _signInManager;
+        private readonly UserManager<UserEntity> _userManager;
         private readonly ILogger<AuthController> _logger;
+        
+        public AuthController(SignInManager<UserEntity> signInManager, UserManager<UserEntity> userManager, ILogger<AuthController> logger)
+        {
+            _signInManager = signInManager;
+            _userManager = userManager;
+            _logger = logger;
+        }
 
         [HttpPost]
         [Route("signup")]

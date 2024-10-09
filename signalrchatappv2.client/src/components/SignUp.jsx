@@ -18,6 +18,12 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Form validation
+    if (!emailInput || !usernameInput || !passwordInput) {
+      setErrorMessage("Please fill in all fields.");
+      return;
+    }
+
     // Call signUpUser API logic from AuthService
     const response = await signUpUser(emailInput, usernameInput, passwordInput);
     if (response.ok) {
@@ -30,7 +36,7 @@ const SignUp = () => {
 
   return (
     <div className="container">
-      <div>
+      <div className='input-container'>
         <input
           type="text"
           placeholder="Username"
@@ -49,8 +55,15 @@ const SignUp = () => {
           value={passwordInput}
           onChange={(e) => setPasswordInput(e.target.value)}
         />
+      </div>
+      <div className='button-container'>
         <button onClick={handleSubmit}>Sign Up</button>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
+      </div>
+      <div className='link-container'>
+        <div className="register-link" onClick={() => navigate("/login")}>
+            Already have an account? Sign in here
+        </div>
       </div>
     </div>
   );

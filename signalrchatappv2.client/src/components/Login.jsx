@@ -24,7 +24,6 @@ const Login = () => {
       const token = data.token;
       sessionStorage.setItem("jwtToken", token);
 
-      // Update central state
       setUser({ username: usernameInput });
       setUsername(usernameInput);
       setAuthorized(true);
@@ -37,7 +36,7 @@ const Login = () => {
 
   return (
     <div className="container">
-      <div>
+      <div className='input-container'>
         <input
           type="text"
           placeholder="Username"
@@ -50,8 +49,15 @@ const Login = () => {
           value={passwordInput}
           onChange={(e) => setPasswordInput(e.target.value)}
         />
-        <button onClick={handleLogin}>Login</button>
+      </div>
+      <div className='button-container'>
+        <button onClick={handleLogin}>Sign in</button>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
+      </div>
+      <div className='link-container'>
+        <div className="register-link" onClick={() => navigate("/signup")}>
+            No account? Sign up here
+        </div>
       </div>
     </div>
   );
