@@ -16,7 +16,6 @@ builder.Services.AddSignalR();
 
 // Configure the database context to use SQLite with a connection string from the configuration.
 builder.Services.AddDbContext<ChatContext>(options =>
-builder.Services.AddDbContext<ChatContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("ChatDbConnection")));
 
 // Configure Identity services for user management and authentication.
