@@ -33,10 +33,13 @@ namespace SignalRChatAppV2.Server.Controllers
         {
             try
             {
+                // Check if the incoming model state is valid.
                 if (ModelState.IsValid)
                 {
+                    // Verify that no other user already exists with the given email.
                     if (!await _userManager.Users.AnyAsync(x => x.Email == userDto.Email))
                     {
+                        // Create a new UserEntity with the provided information.
                         var chatUser = new UserEntity
                         {
                             UserName = userDto.UserName,
@@ -50,10 +53,10 @@ namespace SignalRChatAppV2.Server.Controllers
                     }
                 }
                 return BadRequest();
-
             }
             catch (Exception ex)
             {
+                // Log any exceptions that occur during registration.
                 _logger.LogError($"ERROR : AuthController:Register() :: {ex.Message}");
                 return BadRequest();
             }
@@ -67,12 +70,13 @@ namespace SignalRChatAppV2.Server.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    // Find the user by their username.
                     var user = await _userManager.FindByNameAsync(loginDto.UserName);
                     if (user == null)
                     {
                         return Unauthorized("Invalid username or password");
                     }
-
+                    // Attempt to sign in with the provided username and password.
                     var signInResult = await _signInManager.PasswordSignInAsync(user.UserName!, loginDto.Password, false, false);
                     if (signInResult.Succeeded)
                     {
@@ -89,8 +93,7 @@ namespace SignalRChatAppV2.Server.Controllers
                 return BadRequest();
             }
         }
-
-
+        // Helper method to generate a JWT token for the authenticated user.
         private static string GenerateJwtToken(UserEntity user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -98,6 +101,7 @@ namespace SignalRChatAppV2.Server.Controllers
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
+                // Define the claims for the token.
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                 new Claim(ClaimTypes.Name, user.UserName!),
@@ -106,7 +110,7 @@ namespace SignalRChatAppV2.Server.Controllers
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
-
+            // Create the token based on the defined descriptor.
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }

@@ -4,6 +4,7 @@ import * as signalR from '@microsoft/signalr';
 import DOMPurify from 'dompurify';
 import './Chat.css';
 
+// Access state variables from the context
 const Chat = () => {
   const {
     message,
@@ -16,7 +17,7 @@ const Chat = () => {
     setUsername,
     authorized,
     setAuthorized,
-  } = useContext(AppStateContext); // Access the centralized state
+  } = useContext(AppStateContext); 
 
   const connectionRef = useRef(null);
   const chatWindowRef = useRef(null);
@@ -38,6 +39,7 @@ const Chat = () => {
       chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
     }
 
+    // Create conncection to the chathub
     if (token && !connectionRef.current) {
       const decodedJwt = JSON.parse(atob(token.split(".")[1]));
       setUsername(decodedJwt.unique_name);

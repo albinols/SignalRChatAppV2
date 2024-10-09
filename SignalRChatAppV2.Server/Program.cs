@@ -14,9 +14,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSignalR();
 
+// Configure the database context to use SQLite with a connection string from the configuration.
+builder.Services.AddDbContext<ChatContext>(options =>
 builder.Services.AddDbContext<ChatContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("ChatDbConnection")));
 
+// Configure Identity services for user management and authentication.
 builder.Services.AddDefaultIdentity<UserEntity>(x =>
 {
     x.User.RequireUniqueEmail = true;
@@ -25,6 +28,7 @@ builder.Services.AddDefaultIdentity<UserEntity>(x =>
 
 }).AddEntityFrameworkStores<ChatContext>();
 
+// Configure CORS to allow requests from the specified origin (React client URL).
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy", builder =>
@@ -34,9 +38,11 @@ builder.Services.AddCors(options =>
                .AllowCredentials());
 });
 
+// Configure JWT authentication.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        // Set token validation parameters.
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = false,
@@ -46,15 +52,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("d5df9b30d5891d6e19c3eda79aef6fa0181cb5f0da195f2bbb54022c7d217b1b"))
         };
 
-
+        // Configure SignalR to support token authentication via the query string.
         options.Events = new JwtBearerEvents
         {
             OnMessageReceived = context =>
             {
-
+                // Retrieve the access token from the query string.
                 var accessToken = context.Request.Query["access_token"];
 
-
+                // If the token is present and the request is for the "/chathub" endpoint, set the token.
                 if (!string.IsNullOrEmpty(accessToken) && context.HttpContext.Request.Path.StartsWithSegments("/chathub"))
                 {
                     context.Token = accessToken;
@@ -64,13 +70,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             }
         };
     });
-
+// Configure Kestrel web server to listen on specific ports.
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.ListenAnyIP(5052);
-    options.ListenAnyIP(7128, listenOptions =>
+    options.ListenAnyIP(5052); // HTTP port
+    options.ListenAnyIP(7128, listenOptions => // HTTPS port
     {
-        listenOptions.UseHttps();
+        listenOptions.UseHttps(); // Enable HTTPS for secure communication.
     });
 });
 
@@ -97,6 +103,6 @@ app.UseAuthorization();
 app.MapFallbackToFile("/index.html");
 app.MapControllers();
 
-app.MapHub<ChatHub>("/chathub");
+app.MapHub<ChatHub>("/chathub"); // Map the SignalR hub to the "/chathub" endpoint.
 
 app.Run();
