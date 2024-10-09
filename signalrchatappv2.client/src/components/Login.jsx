@@ -36,6 +36,9 @@ const Login = () => {
 
   return (
     <div className="container">
+      <div className='login-header'>
+        Chatt App Login
+      </div>
       <div className='input-container'>
         <input
           type="text"

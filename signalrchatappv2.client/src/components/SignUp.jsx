@@ -36,6 +36,9 @@ const SignUp = () => {
 
   return (
     <div className="container">
+      <div className='signup-header'>
+        Chatt App Sign Up
+      </div>
       <div className='input-container'>
         <input
           type="text"

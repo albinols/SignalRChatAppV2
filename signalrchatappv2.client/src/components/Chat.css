@@ -11,13 +11,27 @@
   background-color: rgb(171, 198, 218);
 }
 
+.chat-container button {
+  color: black;
+}
+
+.header {
+  margin-bottom: 0.5rem;
+}
+
+.header-message {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
 .chat-window {
   display: flex;
   flex-direction: column;
   align-items: start;
   border: 1px solid black;
   background-color: white;
-  padding: 2rem;
+  padding: 2rem 2rem 2rem 1rem;
 }
 
 .message-container {
@@ -28,4 +42,20 @@
 .message-input {
   padding-left: 1rem;
   width: 70%;
+}
+
+.message {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.username {
+  min-width: 80px;
+  font-weight: bold;
+}
+
+.message-content {
+  flex: 1;
+  word-wrap: break-word;
 }

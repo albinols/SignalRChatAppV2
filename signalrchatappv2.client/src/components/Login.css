@@ -12,6 +12,12 @@
   gap: 1rem;
 }
 
+.login-header {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
 .input-container {
   display: flex;
   flex-direction: column;
@@ -38,6 +44,11 @@
 
 .register-link {
   
+}
+
+.error-message {
+  color: red;
+  font-weight: bold;
 }
 
 .register-link:hover {

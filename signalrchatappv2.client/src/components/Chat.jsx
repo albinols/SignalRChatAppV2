@@ -21,6 +21,16 @@ const Chat = () => {
   const connectionRef = useRef(null);
   const chatWindowRef = useRef(null);
 
+  // Function to generate differnet colors for usernames
+  const getUsernameColor = (userName) => {
+    let hash = 0;
+    for (let i = 0; i < userName.length; i++) {
+      hash = userName.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const color = `hsl(${hash % 360}, 70%, 50%)`;
+    return color;
+  };
+
   useEffect(() => {
     const token = sessionStorage.getItem("jwtToken");
 
@@ -103,14 +113,19 @@ const Chat = () => {
   return (
     <div className="chat-container">
       <div className="header">
-        <h2>Welcome, {username}</h2>
+        <div className="header-message">Welcome {username}</div>
         <button onClick={logOut}>Log out</button>
       </div>
 
       <div className="chat-window" ref={chatWindowRef}>
         {messages.map((msg, index) => (
           <div key={index} className="message">
-            <strong>{msg.user}:</strong> {msg.message}
+            <span className="username" style={{ color: getUsernameColor(msg.user) }}>
+              {msg.user}:
+            </span>
+            <span className="message-content">
+              {msg.message}
+            </span>
           </div>
         ))}
       </div>
