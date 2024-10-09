@@ -6,7 +6,7 @@ This is a simple chat application built with React for the frontend, C# (ASP.NET
 - Real-time chat functionality using SignalR
 - User authentication (login and signup)
 - Messages are displayed to all connected users
-- Basic encryption for message content (optional)
+- Basic encryption for message content
 - HTTPS for secure communication using a self-signed certificate
 
 ## Running the Application Locally
